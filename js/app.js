@@ -1,6 +1,7 @@
 /*
  * Create a list that holds all of your cards
  */
+let deckOfCards = ['fa-diamond', 'fa-paper-plane-o', 'fa-anchor', 'fa-bolt', 'fa-cube', 'fa-anchor', 'fa-leaf', 'fa-bomb']
 let moveCount = 0;
 let currentGuesses = 0;
 let currentTargets = [];
@@ -80,7 +81,8 @@ container.addEventListener('click', function (evt) {
 	if (clickedClass === 'fa fa-repeat') {
 		console.log('Repeat button clicked!')
 	}
-	if (clickedClass === 'card') {
+	// Only show 2 cards - if another card is clicked quickly after pair is selected, ignore
+	if (clickedClass === 'card' && currentGuesses < 2) {
 		show(evt.target);
 	}
 });
