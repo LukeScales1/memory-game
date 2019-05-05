@@ -12,19 +12,13 @@ const container = document.querySelector('.container');
  *   - add each card's HTML to the page
  */
 
-function updateCards(cardsArray, hide, match) {
+function updateCards(cardsArray, match) {
 	const startTime = performance.now();
-	if (hide) {
-		for (var i = cardsArray.length - 1; i >= 0; i--) {
-			cardsArray[i].classList.remove('open', 'show');
-		}
-	} else if (match) {
-		for (var i = cardsArray.length - 1; i >= 0; i--) {
-			cardsArray[i].classList.remove('open', 'show');
+	for (var i = cardsArray.length - 1; i >= 0; i--) {
+		cardsArray[i].classList.remove('open', 'show');
+		if (match) {
 			cardsArray[i].classList.add('match');
 		}
-	} else {
-		console.log('Logic error')
 	}
 	const endTime = performance.now();
 	console.log(endTime - startTime);
@@ -32,17 +26,17 @@ function updateCards(cardsArray, hide, match) {
 
 
 function matchCheck(targetArray) {
-	console.log(targetArray)
+	// console.log(targetArray)
 	cardOne = targetArray[0].innerHTML;
-	console.log(cardOne);
+	// console.log(cardOne);
 	cardTwo = targetArray[1].innerHTML;
-	console.log(cardTwo);
+	// console.log(cardTwo);
 	if (cardOne === cardTwo) {
-		console.log('True');
-		updateCards(targetArray, hide=false, match=true);
+		// console.log('True');
+		updateCards(targetArray, match=true);
 	} else {
-		console.log('False');
-		updateCards(targetArray, hide=true, match=false);
+		// console.log('False');
+		updateCards(targetArray, match=false);
 	}
 	// Remove cards from guesses/current array, reset guesses
 	setTimeout(function() {
@@ -55,7 +49,7 @@ function matchCheck(targetArray) {
 // Function for showing cards and tracking number of cards shown - pass pair to matchCheck()
 function show(target) {
 	currentTargets.push(target);
-	console.log(target);
+	// console.log(target);
 	target.classList.add('open', 'show');
 	guesses += 1;
 	if (guesses === 2 ) {
@@ -80,12 +74,12 @@ function shuffle(array) {
 
 container.addEventListener('click', function (evt) {
 	const clickedClass = evt.target.className;
-	console.log(evt);
+	// console.log(evt);
 	if (clickedClass === 'fa fa-repeat') {
 		console.log('Repeat button clicked!')
 	}
 	if (clickedClass === 'card') {
-		console.log('Card clicked!')
+		// console.log('Card clicked!')
 		show(evt.target);
 	}
 });
