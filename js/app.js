@@ -1,7 +1,8 @@
 /*
  * Create a list that holds all of your cards
  */
-let guesses = 0;
+let moves = 0;
+let currentGuesses = 0;
 let currentTargets = [];
 
 const container = document.querySelector('.container');
@@ -26,22 +27,18 @@ function updateCards(cardsArray, match) {
 
 
 function matchCheck(targetArray) {
-	// console.log(targetArray)
+	isMatch = false;
 	cardOne = targetArray[0].innerHTML;
-	// console.log(cardOne);
 	cardTwo = targetArray[1].innerHTML;
-	// console.log(cardTwo);
 	if (cardOne === cardTwo) {
-		// console.log('True');
-		updateCards(targetArray, match=true);
-	} else {
-		// console.log('False');
-		updateCards(targetArray, match=false);
+		isMatch = true;
 	}
-	// Remove cards from guesses/current array, reset guesses
+	updateCards(targetArray, match=isMatch);
+
+	// Remove cards from current guesses/card array, reset currentGuesses
 	setTimeout(function() {
 		currentTargets = [];
-		guesses = 0;
+		currentGuesses = 0;
 	}, 0);
 
 }
@@ -49,15 +46,15 @@ function matchCheck(targetArray) {
 // Function for showing cards and tracking number of cards shown - pass pair to matchCheck()
 function show(target) {
 	currentTargets.push(target);
-	// console.log(target);
 	target.classList.add('open', 'show');
-	guesses += 1;
-	if (guesses === 2 ) {
+	currentGuesses += 1;
+	if (currentGuesses === 2 ) {
 		setTimeout(function() {
 			matchCheck(currentTargets)}, 1000);
 
 	}
 }
+
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
@@ -74,12 +71,10 @@ function shuffle(array) {
 
 container.addEventListener('click', function (evt) {
 	const clickedClass = evt.target.className;
-	// console.log(evt);
 	if (clickedClass === 'fa fa-repeat') {
 		console.log('Repeat button clicked!')
 	}
 	if (clickedClass === 'card') {
-		// console.log('Card clicked!')
 		show(evt.target);
 	}
 });
