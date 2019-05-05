@@ -4,8 +4,7 @@
 let guesses = 0;
 let currentTargets = [];
 
-const cardDeck = document.querySelector('.container');
-const repeatBtn = document.querySelector('.repeat');
+const container = document.querySelector('.container');
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
@@ -70,7 +69,7 @@ function shuffle(array) {
     return array;
 }
 
-cardDeck.addEventListener('click', function (evt) {
+container.addEventListener('click', function (evt) {
 	console.log(evt);
 	if (evt.target.className === 'fa fa-repeat') {
 		console.log('Repeat button clicked!')
