@@ -1,11 +1,18 @@
 /*
  * Create a list that holds all of your cards
  */
-let moves = 0;
+let moveCount = 0;
 let currentGuesses = 0;
 let currentTargets = [];
 
 const container = document.querySelector('.container');
+const moves = document.querySelector('.moves');
+
+function updateMoves() {
+	moves.textContent = moveCount;
+}
+
+updateMoves();
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
@@ -14,15 +21,14 @@ const container = document.querySelector('.container');
  */
 
 function updateCards(cardsArray, match) {
-	const startTime = performance.now();
 	for (var i = cardsArray.length - 1; i >= 0; i--) {
 		cardsArray[i].classList.remove('open', 'show');
 		if (match) {
 			cardsArray[i].classList.add('match');
 		}
 	}
-	const endTime = performance.now();
-	console.log(endTime - startTime);
+	moveCount += 1;
+	updateMoves();
 }
 
 
