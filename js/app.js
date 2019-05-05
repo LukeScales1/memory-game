@@ -12,10 +12,22 @@ const container = document.querySelector('.container');
  *   - add each card's HTML to the page
  */
 
-function hideCards(cardsArray) {
-	for (var i = cardsArray.length - 1; i >= 0; i--) {
-		cardsArray[i].classList.remove('open', 'show')
+function updateCards(cardsArray, hide, match) {
+	const startTime = performance.now();
+	if (hide) {
+		for (var i = cardsArray.length - 1; i >= 0; i--) {
+			cardsArray[i].classList.remove('open', 'show');
+		}
+	} else if (match) {
+		for (var i = cardsArray.length - 1; i >= 0; i--) {
+			cardsArray[i].classList.remove('open', 'show');
+			cardsArray[i].classList.add('match');
+		}
+	} else {
+		console.log('Logic error')
 	}
+	const endTime = performance.now();
+	console.log(endTime - startTime);
 }
 
 
@@ -25,13 +37,12 @@ function matchCheck(targetArray) {
 	console.log(cardOne);
 	cardTwo = targetArray[1].innerHTML;
 	console.log(cardTwo);
-	// if (targetArray[0].classList == targetArray[1].classList) {
 	if (cardOne === cardTwo) {
 		console.log('True');
+		updateCards(targetArray, hide=false, match=true);
 	} else {
 		console.log('False');
-		// TODO: add browser delay thing
-		hideCards(targetArray);
+		updateCards(targetArray, hide=true, match=false);
 	}
 	// Remove cards from guesses/current array, reset guesses
 	setTimeout(function() {
@@ -41,10 +52,8 @@ function matchCheck(targetArray) {
 
 }
 
-// Function for showing card (toggle show class)
+// Function for showing cards and tracking number of cards shown - pass pair to matchCheck()
 function show(target) {
-	// target.classList.toggle('show');
-	// target.classList.toggle('open');
 	currentTargets.push(target);
 	console.log(target);
 	target.classList.add('open', 'show');
@@ -70,22 +79,17 @@ function shuffle(array) {
 }
 
 container.addEventListener('click', function (evt) {
+	const clickedClass = evt.target.className;
 	console.log(evt);
-	if (evt.target.className === 'fa fa-repeat') {
+	if (clickedClass === 'fa fa-repeat') {
 		console.log('Repeat button clicked!')
 	}
-	if (evt.target.className === 'card') {
+	if (clickedClass === 'card') {
 		console.log('Card clicked!')
+		show(evt.target);
 	}
-	// if (evt.target.nodeName === 'LI') {  // ← verifies target is desired element
- //        // console.log(evt.target);
- //        show(evt.target);
- //    }
 });
 
-// repeatBtn.addEventListener('click', function (event) {
-// 	console.log(event);
-// });
 /*
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)
