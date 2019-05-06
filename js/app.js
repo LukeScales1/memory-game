@@ -20,38 +20,43 @@ function resetDeck() {
 		let cardIcon = card.getElementsByTagName('i');
 		cardIcon[0].classList = ['fa'];
 		card.classList.remove('open', 'show', 'match');
-	}
-}
-
-function setDeck() {
-	for (var i = cardElements.length - 1; i >= 0; i--) {
-		let card = cardElements[i];
-		let cardIcon = card.getElementsByTagName('i');
 		cardIcon[0].classList.add(deckOfCards[i]);
 	}
 }
 
+
+function toggleStar(star) {
+	star.classList.toggle('fa-star-o');
+}
+
+
 function updateMoves() {
 	moves.textContent = moveCount;
-	stars[2].classList.add('fa-star-o');
-	stars[2].classList.remove('fa-star');
-	if (moveCount > 15) {
-		stars[2].classList = ['fa'];
+
+	// Reset the stars if game is reset
+	if (moveCount === 0) {
+		for (var i = stars.length - 1; i >= 0; i--) {
+			stars[i].classList.remove('fa-star-o');
+		}
+	}
+
+	// Update star rating as game progresses
+	if (moveCount === 15) {
+		toggleStar(stars[2]);
+	} else if (moveCount === 20) {
+		toggleStar(stars[1]);
+	} else if (moveCount === 25) {
+		toggleStar(stars[0]);
 	}
 }
 
 
 shuffle(deckOfCards);
-setDeck();
+resetDeck();
 
 updateMoves();
-/*
- * Display the cards on the page
- *   - shuffle the list of cards using the provided "shuffle" method below
- *   - loop through each card and create its HTML
- *   - add each card's HTML to the page
- */
 
+// Function to lock in matches or return cards that don't match
 function updateCards(cardsArray, match) {
 	for (var i = cardsArray.length - 1; i >= 0; i--) {
 		cardsArray[i].classList.remove('open', 'show');
@@ -63,7 +68,7 @@ function updateCards(cardsArray, match) {
 	updateMoves();
 }
 
-
+// Check if chosen pair of cards match
 function matchCheck(targetArray) {
 	isMatch = false;
 	cardOne = targetArray[0].innerHTML;
@@ -113,7 +118,6 @@ container.addEventListener('click', function (evt) {
 	if (clickedClass === 'fa fa-repeat') {
 		shuffle(deckOfCards);
 		resetDeck();
-		setDeck();
 		currentTargets = [];
 		currentGuesses = 0;
 		moveCount = 0;
