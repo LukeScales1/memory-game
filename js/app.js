@@ -1,17 +1,42 @@
 /*
  * Create a list that holds all of your cards
  */
-let deckOfCards = ['fa-diamond', 'fa-paper-plane-o', 'fa-anchor', 'fa-bolt', 'fa-cube', 'fa-anchor', 'fa-leaf', 'fa-bomb']
-let moveCount = 0;
+const availableCards = ['fa-diamond', 'fa-paper-plane-o', 'fa-anchor', 'fa-bolt', 'fa-cube', 'fa-bicycle', 'fa-leaf', 'fa-bomb']
+let deckOfCards = availableCards.concat(availableCards);
+
+let moveCount = 0;  // < 15 = 3 stars; < 20 = 2 stars; >25 = 0 stars;
 let currentGuesses = 0;
 let currentTargets = [];
 
 const container = document.querySelector('.container');
 const moves = document.querySelector('.moves');
 
+cardElements = document.getElementsByClassName('card');
+
+function resetDeck() {
+	for (var i = cardElements.length - 1; i >= 0; i--) {
+		card = cardElements[i];
+		cardIcon = card.getElementsByTagName('i');
+		cardIcon[0].classList = ['fa'];
+		card.classList.remove('open', 'show', 'match');
+	}
+}
+
+function setDeck() {
+	for (var i = cardElements.length - 1; i >= 0; i--) {
+		card = cardElements[i];
+		cardIcon = card.getElementsByTagName('i');
+		cardIcon[0].classList.add(deckOfCards[i]);
+	}
+}
+
 function updateMoves() {
 	moves.textContent = moveCount;
 }
+
+
+shuffle(deckOfCards);
+setDeck();
 
 updateMoves();
 /*
@@ -57,7 +82,7 @@ function show(target) {
 	currentGuesses += 1;
 	if (currentGuesses === 2 ) {
 		setTimeout(function() {
-			matchCheck(currentTargets)}, 1000);
+			matchCheck(currentTargets)}, 800);
 
 	}
 }
@@ -79,7 +104,14 @@ function shuffle(array) {
 container.addEventListener('click', function (evt) {
 	const clickedClass = evt.target.className;
 	if (clickedClass === 'fa fa-repeat') {
-		console.log('Repeat button clicked!')
+		shuffle(deckOfCards);
+		resetDeck();
+		setDeck();
+		currentTargets = [];
+		currentGuesses = 0;
+		moveCount = 0;
+		updateMoves();
+
 	}
 	// Only show 2 cards - if another card is clicked quickly after pair is selected, ignore
 	if (clickedClass === 'card' && currentGuesses < 2) {
