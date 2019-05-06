@@ -5,7 +5,6 @@ const availableCards = ['fa-diamond', 'fa-paper-plane-o', 'fa-anchor', 'fa-bolt'
 let deckOfCards = availableCards.concat(availableCards);
 
 let moveCount = 0;  // < 15 = 3 stars; < 20 = 2 stars; >25 = 0 stars;
-let currentGuesses = 0;
 let currentTargets = [];
 
 const container = document.querySelector('.container');
@@ -81,7 +80,6 @@ function matchCheck(targetArray) {
 	// Remove cards from current guesses/card array, reset currentGuesses
 	setTimeout(function() {
 		currentTargets = [];
-		currentGuesses = 0;
 	}, 0);
 
 }
@@ -90,8 +88,7 @@ function matchCheck(targetArray) {
 function show(target) {
 	currentTargets.push(target);
 	target.classList.add('open', 'show');
-	currentGuesses += 1;
-	if (currentGuesses === 2 ) {
+	if (currentTargets.length === 2 ) {
 		setTimeout(function() {
 			matchCheck(currentTargets)}, 800);
 
@@ -113,30 +110,17 @@ function shuffle(array) {
 }
 
 container.addEventListener('click', function (evt) {
-	console.log(evt.target.classList);
 	const clickedClass = evt.target.className;
 	if (clickedClass === 'fa fa-repeat') {
 		shuffle(deckOfCards);
 		resetDeck();
 		currentTargets = [];
-		currentGuesses = 0;
 		moveCount = 0;
 		updateMoves();
 
 	}
 	// Only show 2 cards - if another card is clicked quickly after pair is selected, ignore
-	if (clickedClass === 'card' && currentGuesses < 2) {
+	if (clickedClass === 'card' && currentTargets.length < 2) {
 		show(evt.target);
 	}
 });
-
-/*
- * set up the event listener for a card. If a card is clicked:
- *  - display the card's symbol (put this functionality in another function that you call from this one)
- *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
- *  - if the list already has another card, check to see if the two cards match
- *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
- *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
- *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
- *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
- */
