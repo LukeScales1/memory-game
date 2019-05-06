@@ -1,6 +1,4 @@
-/*
- * Create a list that holds all of your cards
- */
+
 const availableCards = ['fa-diamond', 'fa-paper-plane-o', 'fa-anchor', 'fa-bolt', 'fa-cube', 'fa-bicycle', 'fa-leaf', 'fa-bomb']
 let deckOfCards = availableCards.concat(availableCards);
 
