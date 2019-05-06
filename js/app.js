@@ -11,12 +11,13 @@ let currentTargets = [];
 const container = document.querySelector('.container');
 const moves = document.querySelector('.moves');
 
-cardElements = document.getElementsByClassName('card');
+const stars = document.getElementsByClassName('fa-star');
+const cardElements = document.getElementsByClassName('card');
 
 function resetDeck() {
 	for (var i = cardElements.length - 1; i >= 0; i--) {
-		card = cardElements[i];
-		cardIcon = card.getElementsByTagName('i');
+		let card = cardElements[i];
+		let cardIcon = card.getElementsByTagName('i');
 		cardIcon[0].classList = ['fa'];
 		card.classList.remove('open', 'show', 'match');
 	}
@@ -24,14 +25,19 @@ function resetDeck() {
 
 function setDeck() {
 	for (var i = cardElements.length - 1; i >= 0; i--) {
-		card = cardElements[i];
-		cardIcon = card.getElementsByTagName('i');
+		let card = cardElements[i];
+		let cardIcon = card.getElementsByTagName('i');
 		cardIcon[0].classList.add(deckOfCards[i]);
 	}
 }
 
 function updateMoves() {
 	moves.textContent = moveCount;
+	stars[2].classList.add('fa-star-o');
+	stars[2].classList.remove('fa-star');
+	if (moveCount > 15) {
+		stars[2].classList = ['fa'];
+	}
 }
 
 
@@ -102,6 +108,7 @@ function shuffle(array) {
 }
 
 container.addEventListener('click', function (evt) {
+	console.log(evt.target.classList);
 	const clickedClass = evt.target.className;
 	if (clickedClass === 'fa fa-repeat') {
 		shuffle(deckOfCards);
