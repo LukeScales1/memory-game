@@ -5,6 +5,8 @@ let deckOfCards = availableCards.concat(availableCards);
 let moveCount = 0;  // < 15 = 3 stars; < 20 = 2 stars; >25 = 0 stars;
 let currentTargets = [];
 
+let noOfPairs = 0;
+
 let gameStart = false;
 
 const container = document.querySelector('.container');
@@ -16,6 +18,10 @@ const stars = document.getElementsByClassName('fa-star');
 const cardElements = document.getElementsByClassName('card');
 
 function resetDeck() {
+	// No matches on deck reset
+	noOfPairs = 0;
+
+	// Remove old fa icon and any open/show/match classes, reassign with new fa icons
 	for (var i = cardElements.length - 1; i >= 0; i--) {
 		let card = cardElements[i];
 		let cardIcon = card.getElementsByTagName('i');
@@ -81,6 +87,11 @@ function matchCheck(targetArray) {
 	cardTwo = targetArray[1].innerHTML;
 	if (cardOne === cardTwo) {
 		isMatch = true;
+		++noOfPairs;
+		if (noOfPairs === 8) {
+			// Game won!
+
+		}
 	}
 	updateCards(targetArray, match=isMatch);
 
@@ -122,8 +133,14 @@ container.addEventListener('click', function (evt) {
 		shuffle(deckOfCards);
 		resetDeck();
 		currentTargets = [];
+		
 		moveCount = 0;
 		updateMoves();
+
+		clearInterval(timerIntervalId);
+		time = 0;
+		timer.textContent = time;
+		gameStart = false;
 
 	}
 	// Only show 2 cards - if another card is clicked quickly after pair is selected, ignore
