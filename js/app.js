@@ -32,7 +32,6 @@ function toggleStar(star) {
 
 function updateTime() {
 	++time;
-	console.log(time);
 	timer.textContent = time;
 }
 
