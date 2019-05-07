@@ -5,8 +5,12 @@ let deckOfCards = availableCards.concat(availableCards);
 let moveCount = 0;  // < 15 = 3 stars; < 20 = 2 stars; >25 = 0 stars;
 let currentTargets = [];
 
+let gameStart = false;
+
 const container = document.querySelector('.container');
 const moves = document.querySelector('.moves');
+const timer = document.querySelector('.timer');
+let time = 0;
 
 const stars = document.getElementsByClassName('fa-star');
 const cardElements = document.getElementsByClassName('card');
@@ -24,6 +28,12 @@ function resetDeck() {
 
 function toggleStar(star) {
 	star.classList.toggle('fa-star-o');
+}
+
+function updateTime() {
+	++time;
+	console.log(time);
+	timer.textContent = time;
 }
 
 
@@ -119,6 +129,11 @@ container.addEventListener('click', function (evt) {
 	}
 	// Only show 2 cards - if another card is clicked quickly after pair is selected, ignore
 	if (clickedClass === 'card' && currentTargets.length < 2) {
+		// If card clicked, start timer
+		if (gameStart === false) {
+			timerIntervalId = setInterval(updateTime, 1000);
+			gameStart = true;
+		}
 		show(evt.target);
 	}
 });
