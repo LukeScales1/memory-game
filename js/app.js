@@ -3,6 +3,7 @@ const availableCards = ['fa-diamond', 'fa-paper-plane-o', 'fa-anchor', 'fa-bolt'
 let deckOfCards = availableCards.concat(availableCards);
 
 let moveCount = 0;  // < 15 = 3 stars; < 20 = 2 stars; >25 = 0 stars;
+let score = 3;
 let currentTargets = [];
 
 let noOfPairs = 0;
@@ -16,6 +17,11 @@ let time = 0;
 
 const stars = document.getElementsByClassName('fa-star');
 const cardElements = document.getElementsByClassName('card');
+
+const modal = document.getElementById('modal');
+const finalMoves = document.getElementById('final-moves');
+const finalTime = document.getElementById('final-time');
+const finalScore = document.getElementById('final-score');
 
 function resetDeck() {
 	// No matches on deck reset
@@ -55,10 +61,13 @@ function updateMoves() {
 	// Update star rating as game progresses
 	if (moveCount === 15) {
 		toggleStar(stars[2]);
+		score = 2;
 	} else if (moveCount === 20) {
 		toggleStar(stars[1]);
+		score = 1;
 	} else if (moveCount === 25) {
 		toggleStar(stars[0]);
+		score = 0;
 	}
 }
 
@@ -76,8 +85,15 @@ function updateCards(cardsArray, match) {
 			cardsArray[i].classList.add('match');
 		}
 	}
-	moveCount += 1;
 	updateMoves();
+}
+
+function gameWon() {
+	modal.style.display = 'block';
+	finalScore.textContent = score;
+	finalMoves.textContent = moveCount;
+	finalTime.textContent = time;
+	clearInterval(timerIntervalId);
 }
 
 // Check if chosen pair of cards match
@@ -90,6 +106,7 @@ function matchCheck(targetArray) {
 		++noOfPairs;
 		if (noOfPairs === 8) {
 			// Game won!
+			gameWon();
 
 		}
 	}
@@ -107,6 +124,7 @@ function show(target) {
 	currentTargets.push(target);
 	target.classList.add('open', 'show');
 	if (currentTargets.length === 2 ) {
+		moveCount += 1;
 		setTimeout(function() {
 			matchCheck(currentTargets)}, 800);
 
@@ -133,7 +151,7 @@ container.addEventListener('click', function (evt) {
 		shuffle(deckOfCards);
 		resetDeck();
 		currentTargets = [];
-		
+
 		moveCount = 0;
 		updateMoves();
 

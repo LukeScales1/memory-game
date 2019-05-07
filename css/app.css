@@ -28,7 +28,7 @@ body {
     flex-direction: column;
 }
 
-h1 {
+h1, h2 {
     font-family: 'Open Sans', sans-serif;
     font-weight: 300;
 }
@@ -118,4 +118,32 @@ h1 {
     width: 50%;
     text-align: center;
     justify-content: center;
+}
+
+/*
+ * Styles for the modal
+ */
+
+ #modal {
+    display: none;
+    width: 80%;
+    height: 40%;
+    border: inset;
+    border-radius: 1;
+    z-index: 1;
+    position: fixed;
+    background-color: rgb(200, 200, 200);
+/*    align-content: center;
+    text-align: center;
+    justify-content: center;
+    vertical-align: middle;*/
+ }
+
+.modal-display {
+    /*background-color: #000;*/
+    align-content: center;
+    text-align: center;
+    justify-content: center;
+    vertical-align: middle;
+    height: 100%;
 }
