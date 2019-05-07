@@ -145,9 +145,7 @@ function shuffle(array) {
     return array;
 }
 
-container.addEventListener('click', function (evt) {
-	const clickedClass = evt.target.className;
-	if (clickedClass === 'fa fa-repeat') {
+function restart() {
 		shuffle(deckOfCards);
 		resetDeck();
 		currentTargets = [];
@@ -159,7 +157,21 @@ container.addEventListener('click', function (evt) {
 		time = 0;
 		timer.textContent = time;
 		gameStart = false;
+}
 
+container.addEventListener('click', function (evt) {
+	const clickedClass = evt.target.className;
+
+	if (clickedClass === 'modal-btn') {
+		if (evt.srcElement.id === 'yes-btn') {
+			restart();
+		}
+		// If no-btn just hide modal, also hide for yes-btn
+		modal.style.display = 'none';
+	}
+
+	if (clickedClass === 'fa fa-repeat') {
+		restart();
 	}
 	// Only show 2 cards - if another card is clicked quickly after pair is selected, ignore
 	if (clickedClass === 'card' && currentTargets.length < 2) {
