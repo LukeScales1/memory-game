@@ -196,6 +196,5 @@ container.addEventListener('click', function (evt) {
 			gameStart = true;
 		}
 		show(evt.target);
-		gameWon();
 	}
 });
