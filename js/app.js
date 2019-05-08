@@ -181,6 +181,8 @@ container.addEventListener('click', function (evt) {
 		}
 		// If no-btn just hide modal, also hide for yes-btn
 		modal.style.display = 'none';
+		modalBackground.style.display = 'none';
+		modalBackground.style.opacity = 0;
 	}
 
 	if (clickedClass === 'fa fa-repeat') {
