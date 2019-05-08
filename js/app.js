@@ -19,6 +19,7 @@ const stars = document.getElementsByClassName('fa-star');
 const cardElements = document.getElementsByClassName('card');
 
 const modal = document.getElementById('modal');
+const modalBackground = document.getElementById('modal-background');
 const finalMoves = document.getElementById('final-moves');
 const finalTime = document.getElementById('final-time');
 const finalScore = document.getElementById('final-score');
@@ -88,12 +89,24 @@ function updateCards(cardsArray, match) {
 	updateMoves();
 }
 
+function fadeIn() {
+	backgroundOpacity += 0.005;
+	modalBackground.style.opacity = backgroundOpacity;
+}
+
 function gameWon() {
-	modal.style.display = 'block';
 	finalScore.textContent = score;
 	finalMoves.textContent = moveCount;
 	finalTime.textContent = time;
 	clearInterval(timerIntervalId);
+
+	modal.style.display = 'block';
+	modalBackground.style.display = 'block';
+	backgroundOpacity = 0.01;
+	fadeIntervalId = setInterval(fadeIn, 12);
+	setTimeout(function() {
+		clearInterval(fadeIntervalId);
+	}, 1000);
 }
 
 // Check if chosen pair of cards match
@@ -107,7 +120,6 @@ function matchCheck(targetArray) {
 		if (noOfPairs === 8) {
 			// Game won!
 			gameWon();
-
 		}
 	}
 	updateCards(targetArray, match=isMatch);
@@ -123,6 +135,7 @@ function matchCheck(targetArray) {
 function show(target) {
 	currentTargets.push(target);
 	target.classList.add('open', 'show');
+	// Pair of cards selected = 1 move of game, check for match
 	if (currentTargets.length === 2 ) {
 		moveCount += 1;
 		setTimeout(function() {
@@ -175,11 +188,12 @@ container.addEventListener('click', function (evt) {
 	}
 	// Only show 2 cards - if another card is clicked quickly after pair is selected, ignore
 	if (clickedClass === 'card' && currentTargets.length < 2) {
-		// If card clicked, start timer
+		// If card clicked, game has started - start timer
 		if (gameStart === false) {
 			timerIntervalId = setInterval(updateTime, 1000);
 			gameStart = true;
 		}
 		show(evt.target);
+		gameWon();
 	}
 });
