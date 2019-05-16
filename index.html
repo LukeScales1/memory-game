@@ -2,10 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Matching Game</title>
     <meta name="description" content="">
     <link rel="stylesheet prefetch" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
     <link rel="stylesheet prefetch" href="https://fonts.googleapis.com/css?family=Coda">
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/app.css">
 </head>
 <body>
@@ -15,8 +17,8 @@
             <h1>Matching Game</h1>
         </header>
 
-        <section class="score-panel">
-        	<div class=moves-box>
+        <section class="row score-panel">
+        	<div class="moves-box">
                 <ul class="stars">
         		  <li><i class="fa fa-star"></i></li>
         		  <li><i class="fa fa-star"></i></li>
@@ -26,7 +28,9 @@
         	   <span class="moves">3</span> Moves
             </div>
 
-            <span class="timer">0</span> Secs
+            <div class="timer-box">
+                <span><span class="timer">0</span> Secs</span>
+            </div>
 
             <div class="restart">
         		<i class="fa fa-repeat"></i>
