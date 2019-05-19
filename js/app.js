@@ -1,6 +1,6 @@
 
-const availableCards = ['fa-diamond', 'fa-paper-plane-o', 'fa-anchor', 'fa-bolt', 'fa-cube', 'fa-bicycle', 'fa-leaf', 'fa-bomb']
-let deckOfCards = availableCards.concat(availableCards);
+const AVAILABLE_CARDS = ['fa-diamond', 'fa-paper-plane-o', 'fa-anchor', 'fa-bolt', 'fa-cube', 'fa-bicycle', 'fa-leaf', 'fa-bomb']
+let deckOfCards = AVAILABLE_CARDS.concat(AVAILABLE_CARDS);
 
 let moveCount = 0;  // < 15 = 3 stars; < 20 = 2 stars; >25 = 0 stars;
 let score = 3;
@@ -35,29 +35,29 @@ function resetDeck() {
 		cardIcon[0].classList = ['fa'];
 		card.classList.remove('open', 'show', 'match');
 		cardIcon[0].classList.add(deckOfCards[i]);
-	}
-}
+	};
+};
 
 
 function toggleStar(star) {
 	star.classList.toggle('fa-star-o');
-}
+};
 
 function updateTime() {
 	++time;
 	timer.textContent = time;
-}
+};
 
 
-function updateMoves() {
+function updateRating() {
 	moves.textContent = moveCount;
 
 	// Reset the stars if game is reset
 	if (moveCount === 0) {
 		for (var i = stars.length - 1; i >= 0; i--) {
 			stars[i].classList.remove('fa-star-o');
-		}
-	}
+		};
+	};
 
 	// Update star rating as game progresses
 	if (moveCount === 15) {
@@ -66,17 +66,15 @@ function updateMoves() {
 	} else if (moveCount === 20) {
 		toggleStar(stars[1]);
 		score = 1;
-	} else if (moveCount === 25) {
-		toggleStar(stars[0]);
-		score = 0;
-	}
-}
+	};
 
+	// Project rubric asked for 1 star minimum
 
-shuffle(deckOfCards);
-resetDeck();
-
-updateMoves();
+	// } else if (moveCount === 25) {
+	// 	toggleStar(stars[0]);
+	// 	score = 0;
+	// }
+};
 
 // Function to lock in matches or return cards that don't match
 function updateCards(cardsArray, match) {
@@ -84,15 +82,14 @@ function updateCards(cardsArray, match) {
 		cardsArray[i].classList.remove('open', 'show');
 		if (match) {
 			cardsArray[i].classList.add('match');
-		}
-	}
-	updateMoves();
-}
+		};
+	};
+};
 
 function fadeIn() {
 	backgroundOpacity += 0.005;
 	modalBackground.style.opacity = backgroundOpacity;
-}
+};
 
 function gameWon() {
 	finalScore.textContent = score;
@@ -106,11 +103,12 @@ function gameWon() {
 	fadeIntervalId = setInterval(fadeIn, 12);
 	setTimeout(function() {
 		clearInterval(fadeIntervalId);
-	}, 1000);
-}
+	}, 1200);
+};
 
 // Check if chosen pair of cards match
 function matchCheck(targetArray) {
+	updateRating();
 	isMatch = false;
 	cardOne = targetArray[0].innerHTML;
 	cardTwo = targetArray[1].innerHTML;
@@ -120,8 +118,8 @@ function matchCheck(targetArray) {
 		if (noOfPairs === 8) {
 			// Game won!
 			gameWon();
-		}
-	}
+		};
+	};
 	updateCards(targetArray, match=isMatch);
 
 	// Remove cards from current guesses/card array, reset currentGuesses
@@ -129,7 +127,7 @@ function matchCheck(targetArray) {
 		currentTargets = [];
 	}, 0);
 
-}
+};
 
 // Function for showing cards and tracking number of cards shown - pass pair to matchCheck()
 function show(target) {
@@ -140,9 +138,8 @@ function show(target) {
 		moveCount += 1;
 		setTimeout(function() {
 			matchCheck(currentTargets)}, 800);
-
-	}
-}
+	};
+};
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -154,9 +151,9 @@ function shuffle(array) {
         temporaryValue = array[currentIndex];
         array[currentIndex] = array[randomIndex];
         array[randomIndex] = temporaryValue;
-    }
+    };
     return array;
-}
+};
 
 function restart() {
 		shuffle(deckOfCards);
@@ -164,13 +161,19 @@ function restart() {
 		currentTargets = [];
 
 		moveCount = 0;
-		updateMoves();
+		updateRating();
 
 		clearInterval(timerIntervalId);
 		time = 0;
 		timer.textContent = time;
 		gameStart = false;
-}
+};
+
+
+shuffle(deckOfCards);
+resetDeck();
+
+updateRating();
 
 container.addEventListener('click', function (evt) {
 	const clickedClass = evt.target.className;
@@ -178,23 +181,23 @@ container.addEventListener('click', function (evt) {
 	if (clickedClass === 'modal-btn') {
 		if (evt.srcElement.id === 'yes-btn') {
 			restart();
-		}
+		};
 		// If no-btn just hide modal, also hide for yes-btn
 		modal.style.display = 'none';
 		modalBackground.style.display = 'none';
 		modalBackground.style.opacity = 0;
-	}
+	};
 
 	if (clickedClass === 'fa fa-repeat') {
 		restart();
-	}
+	};
 	// Only show 2 cards - if another card is clicked quickly after pair is selected, ignore
 	if (clickedClass === 'card' && currentTargets.length < 2) {
 		// If card clicked, game has started - start timer
 		if (gameStart === false) {
 			timerIntervalId = setInterval(updateTime, 1000);
 			gameStart = true;
-		}
+		};
 		show(evt.target);
-	}
+	};
 });

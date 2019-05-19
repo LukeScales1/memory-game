@@ -226,7 +226,7 @@ h1, h2, h3 {
     }
 }
 
-/*@media screen and (max-width: 768px) {
+@media screen and (max-width: 768px) {
     .deck {
         min-width: 80%;
         min-width: 550px;
@@ -238,7 +238,7 @@ h1, h2, h3 {
         width: 115px;
         border-radius: 8px;
     }
-}*/
+}
 
 @media screen and (max-width: 710px) {
     .deck {
@@ -256,7 +256,7 @@ h1, h2, h3 {
 @media screen and (max-width: 620px) {
     .deck {
         width: 80%;
-        height: 450px;
+        height: 490px;
     }
 
     .deck .card {
@@ -268,8 +268,8 @@ h1, h2, h3 {
 
 @media screen and (max-width: 600px) {
     .deck {
-        width: 80%;
-        height: 200px;
+        min-width: 480px;
+        height: 480px;
     }
 
     .deck .card {
@@ -277,13 +277,90 @@ h1, h2, h3 {
         width: 100px;
         border-radius: 8px;
     }
+
+/*    #modal {
+        width: 80%;
+        height: 50%;
+    }*/
+
+    .modal-display {
+        padding-top: 0px;
+        padding: 20px;
+    }   
+
+    #result {
+        margin-top: 10px;
+    }
+
+    .modal-btn {
+        font-size: 16pt;
+        line-height: 1.6rem;
+        margin: 5px;
+        padding: 5px;
+        width: 140px;
+    }
 }
+
+@media screen and (max-width: 520px) {
+    .deck {
+        min-width: 450px;
+        height: 450px;
+    }
+
+    .deck .card {
+        height: 90px;
+        width: 90px;
+        border-radius: 7.5px;
+    }
+}
+
+@media screen and (max-width: 490px) {
+    .deck {
+        min-width: 430px;
+        height: 430px;
+    }
+
+    .deck .card {
+        height: 85px;
+        width: 85px;
+        border-radius: 7.5px;
+    }
+}
+
+@media screen and (max-width: 465px) {
+    h1 {
+        font-weight: 250;
+        font-size: 22pt;
+        padding-bottom: 10px; 
+    }
+
+    body {
+        font-size: 11pt;
+    }
+
+    .deck {
+        min-width: 415px;
+        height: 415px;
+    }
+
+    .deck .card {
+        height: 80px;
+        width: 80px;
+        border-radius: 7px;
+    }
+}
+
 
 @media screen and (max-width: 370px) {
 
-    h1 {
+    h1, h2 {
         font-weight: 200;
         font-size: 18pt;
+    }
+
+    h3 {
+        font-weight: 200;
+        font-size: 16pt;
     }
 
     body {
@@ -292,7 +369,7 @@ h1, h2, h3 {
     }
 
     .deck {
-        width: 300px;
+        min-width: 300px;
         height: 300px;
         border-radius: 8px;
         margin: 0 0 3em;
@@ -310,25 +387,6 @@ h1, h2, h3 {
         min-width: 33.33%;
     }
 
-/*    .score-panel .stars {
-        margin: 0;
-        padding: 0;
-        display: inline-block;
-        margin: 0 5px 0 0;
-    }*/
-/*
-    .score-panel .stars li {
-        list-style: none;
-        display: inline-block;
-    }*/
-
-/*    .score-panel .restart {
-        width: 40%;
-    }
-
-    .score-panel .timer-box {
-        width: 30%;
-    }*/
 
     .deck .card.show {
         font-size: 20px;
@@ -336,6 +394,28 @@ h1, h2, h3 {
 
     .deck .card.match {
         font-size: 20px;
+    }
+
+    #modal {
+        width: 80%;
+        height: 50%;
+    }
+
+    .modal-display {
+        padding-top: 0px;
+        padding: 20px;
+    }   
+
+    #result {
+        margin-top: 20px;
+    }
+
+    .modal-btn {
+        font-size: 12pt;
+        line-height: 1.4rem;
+        margin: 1px;
+        padding: 5px;
+        width: 120px;
     }
 }
 
