@@ -6,4 +6,6 @@ Upon completing the game a modal is shown asking the player if they would like t
 This game was created as the second project in Udacity's Front-End Web Development Nanodegree course. It was modified from starter code (which can be found at https://github.com/udacity/fend-project-memory-game) that was provided as part of the course.
 
 ## Usage
-To try the game, clone the directory and open `index.html` using your favourite web browser. Click/tap a card to start the game - find all pairs to win.#
+To try the game, clone the directory and open `index.html` using your favourite web browser. Click/tap a card to start the game - find all pairs to win.
+
+Please be aware that you will need an internet connection to run the game as the cards icons are loaded from an online resource.
